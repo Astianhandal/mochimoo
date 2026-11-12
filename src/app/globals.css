@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-fredoka: 'Fredoka', 'Quicksand', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-plus-jakarta: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* THEMED BROWSER SURFACES (Impeccable craft floor) */
+::selection {
+  background-color: #FFD6DD;
+  color: #911426;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #FCF8F5; }
+::-webkit-scrollbar-thumb { background: #E8D3C8; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #D93848; }
+
+/* Focus ring from palette */
+*:focus-visible {
+  outline: 2.5px solid #D93848;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Paper ground */
+body {
+  background-color: #FCF8F5;
+  color: #3B231A;
+  font-family: var(--font-plus-jakarta);
+  overflow-x: hidden;
+  /* Subtle kinako-dusted paper grain */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+/* Touch-safe tap feedback */
+@media (pointer: coarse) {
+  .tap-target { min-height: 44px; min-width: 44px; }
+}
+
+/* One authored entrance: fade up from rest position */
+@keyframes enterUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.enter-up {
+  animation: enterUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Mochi mascot idle float — the page's one nonessential loop */
+@keyframes mochiFloat {
+  0%, 100% { transform: translateY(0) rotate(-0.5deg); }
+  50% { transform: translateY(-8px) rotate(0.5deg); }
+}
+
+.mochi-float {
+  animation: mochiFloat 3.5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+/* Respect users who asked for less motion */
+@media (prefers-reduced-motion: reduce) {
+  .enter-up { animation: none; opacity: 1; transform: none; }
+  .mochi-float { animation: none; }
+}
+
+/* Marquee scroll */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 28s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}
+
+/* Sticky bottom CTA bar (mobile-first) */
+.sticky-cta {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 40;
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  padding-top: 0.75rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background: rgba(252, 248, 245, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid #EBDDD4;
+}
+
+/* At ≥768px, sticky CTA gives way to inline CTAs */
+@media (min-width: 768px) {
+  .sticky-cta { display: none; }
+}
+
+/* Responsive prose measure */
+.prose-measure { max-width: 65ch; }
